@@ -5,13 +5,16 @@ const Headline = styled.h1`
   top: 0;
   left: 0;
   width: 100%;
-  background-color: white;
   margin: 0;
   padding: 20px;
   text-align: center;
   z-index: 1;
+  background-color: rgb(252, 252, 252);
+  box-shadow: lightgray 0px 2px 8px;
+  text-align: center;
+  border-radius: 1rem;
 `;
 
 export default function TitleBar() {
-  return <Headline>Tourio</Headline>;
+  return <Headline>Tourio App</Headline>;
 }
