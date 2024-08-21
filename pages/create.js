@@ -17,13 +17,14 @@ export default function CreatePlacePage() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(placeData),
+      body: JSON.stringify(place),
     });
 
     if (!response.ok) {
       console.error(response.status);
       return;
     }
+    router.push("/");
   }
 
   return (
