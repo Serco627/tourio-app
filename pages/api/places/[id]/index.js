@@ -5,24 +5,20 @@ export default async function handler(request, response) {
   await dbConnect();
   const { id } = request.query;
 
-  if (request.method === "GET") {
-    if (!id) {
-      return response
-        .status(400)
-        .json({ message: "Bad Request: ID is required" });
-    }
+  if (!id) {
+    return;
+  }
 
-    try {
-      const place = await Place.findById(id);
-      if (!place) {
-        return response.status(404).json({ message: "Place not found" });
-      }
-      return response.status(200).json(place);
-    } catch (error) {
-      console.error("Error fetching place:", error);
-      return response.status(500).json({ message: "Internal Server Error" });
-    }
+  if (request.method === "GET") {
+    const place = await Place.findById(id);
+    response.status(200).json(place);
+  } else if (request.method === "PUT") {
+    await Place.findByIdAndUpdate(id, { $set: request.body });
+    response.status(200).json({ status: "updated place" });
+  } else if (request.method === "DELETE") {
+    await Place.findByIdAndDelete(id);
+    response.status(200).json({ status: "deleted" });
   } else {
-    return response.status(405).json({ message: "Method Not Allowed" });
+    return response.status(404).json({ status: "Not found" });
   }
 }
